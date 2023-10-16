@@ -2,15 +2,8 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-// pub type int16 = ::std::os::raw::c_short;
-// pub type int32 = ::std::os::raw::c_int;
-// pub type uint8 = ::std::os::raw::c_uchar;
-// pub type uint16 = ::std::os::raw::c_ushort;
-// pub type uint32 = ::std::os::raw::c_uint;
-// pub type int64 = ::std::os::raw::c_longlong;
-
-use autocxx::prelude::*;
 use std::fmt::{Debug, Formatter};
+use autocxx::prelude::*;
 
 include_cpp! {
     #include "box2d/box2d.h"
@@ -92,6 +85,11 @@ impl Debug for ffi::b2Vec2 {
 
 #[cfg(test)]
 mod tests {
+    use std::pin::Pin;
+
+    use crate::ffi::{b2BodyDef, b2PolygonShape, b2Shape};
+    use crate::ffi::b2BodyType::b2_dynamicBody;
+
     use super::*;
 
     #[test]
@@ -102,5 +100,39 @@ mod tests {
         let world_gravity = world.GetGravity();
         let expected_gravity = gravity.as_ref().get_ref();
         assert_eq!(*expected_gravity, world_gravity);
+    }
+
+    #[test]
+    fn gravity_affects_position() {
+        unsafe {
+            let gravity = ffi::b2Vec2::new1(0., -10.).within_box();
+            let mut world = ffi::b2World::new(&*gravity).within_box();
+            let mut body_def = b2BodyDef::new().within_box();
+            body_def.type_ = b2_dynamicBody;
+            let body_def = &*body_def;
+            let body = world.as_mut().CreateBody(&*body_def);
+            let mut body = Pin::new_unchecked(body.as_mut().unwrap());
+
+            let mut shape = b2PolygonShape::new().within_box();
+            shape.as_mut().SetAsBox(5., 5.);
+            let shape: &b2Shape = (&*shape).as_ref();
+            body.as_mut().CreateFixture1(&*shape, 5.);
+
+            for _ in 0..10 {
+                world.as_mut().Step(
+                    0.02,
+                    c_int::from(8),
+                    c_int::from(3),
+                    c_int::from(100));
+            }
+
+            assert!(body.as_ref().GetPosition().y < 0., "Body needs to move downwards due to gravity");
+        }
+    }
+}
+
+impl Debug for ffi::b2Body {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("b2Body").field("position", &self.GetPosition()).field("angle", &self.GetAngle()).field("type", &(self.GetType() as u32)).field("mass", &self.GetMass()).finish()
     }
 }
