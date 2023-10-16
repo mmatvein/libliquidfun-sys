@@ -5,7 +5,8 @@ use std::path::PathBuf;
 fn main() {
     println!("cargo:rustc-link-lib=static=box2d");
     println!("cargo:rerun-if-changed=box2d/");
-    println!("cargo:rerun-if-changed=src/lib.rs");
+    //println!("cargo:rerun-if-changed=src/lib.rs");
+    println!("cargo:rerun-if-changed=include/");
 
     let box2d_path = build_box2d();
     generate_bindings(box2d_path);
@@ -31,7 +32,8 @@ fn build_box2d() -> PathBuf {
 }
 
 fn generate_bindings(box2d_path: PathBuf) {
-    let include_path = box2d_path.join(std::path::PathBuf::from("include"));
-    let mut autocxx_build = autocxx_build::Builder::new("src/lib.rs", [&include_path]).build().unwrap();
-    autocxx_build.include(include_path).flag_if_supported("-std=c++14").compile("libliquidfun-sys.a");
+    let box2d_include_path = box2d_path.join(std::path::PathBuf::from("include"));
+    let include_path = std::path::PathBuf::from("include");
+    let mut autocxx_build = autocxx_build::Builder::new("src/lib.rs", [&box2d_include_path, &include_path]).build().unwrap();
+    autocxx_build.include(box2d_include_path).include(include_path).flag_if_supported("-std=c++14").compile("libliquidfun-sys.a");
 }

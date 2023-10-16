@@ -7,6 +7,7 @@ use autocxx::prelude::*;
 
 include_cpp! {
     #include "box2d/box2d.h"
+    #include "extras.hpp"
     safety!(unsafe_ffi)
 
     generate!("b2Body")
@@ -63,6 +64,9 @@ include_cpp! {
     generate_pod!("b2Transform")
     generate_pod!("b2Vec2")
     generate_pod!("b2Rot")
+
+    // extras.hpp
+    generate!("SetCircleRadius")
 }
 
 pub mod box2d {
@@ -87,8 +91,9 @@ impl Debug for ffi::b2Vec2 {
 mod tests {
     use std::pin::Pin;
 
-    use crate::ffi::{b2BodyDef, b2PolygonShape, b2Shape};
+    use crate::ffi::{b2BodyDef, b2CircleShape, b2PolygonShape, b2Shape};
     use crate::ffi::b2BodyType::b2_dynamicBody;
+    use crate::ffi::SetCircleRadius;
 
     use super::*;
 
@@ -113,8 +118,10 @@ mod tests {
             let body = world.as_mut().CreateBody(&*body_def);
             let mut body = Pin::new_unchecked(body.as_mut().unwrap());
 
-            let mut shape = b2PolygonShape::new().within_box();
-            shape.as_mut().SetAsBox(5., 5.);
+            // let mut shape = b2PolygonShape::new().within_box();
+            // shape.as_mut().SetAsBox(5., 5.);
+            let mut shape = b2CircleShape::new().within_box();
+            SetCircleRadius(shape.as_mut(), 5.);
             let shape: &b2Shape = (&*shape).as_ref();
             body.as_mut().CreateFixture1(&*shape, 5.);
 
