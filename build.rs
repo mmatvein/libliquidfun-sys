@@ -5,7 +5,7 @@ use std::path::PathBuf;
 fn main() {
     println!("cargo:rustc-link-lib=static=box2d");
     println!("cargo:rerun-if-changed=box2d/");
-    //println!("cargo:rerun-if-changed=src/lib.rs");
+    println!("cargo:rerun-if-changed=src/lib.rs");
     println!("cargo:rerun-if-changed=include/");
 
     let box2d_path = build_box2d();
