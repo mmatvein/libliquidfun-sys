@@ -19,7 +19,7 @@ extern "C" {
     b2ParticleGroupDef* CreateParticleGroupDef(
         uint32 flags,
         uint32 groupFlags,
-        b2Vec2& position,
+        b2Vec2 position,
         float angle,
         b2Vec2 linearVelocity,
         float angularVelocity,
