@@ -69,6 +69,7 @@ include_cpp! {
     // extras.hpp
     generate!("SetCircleRadius")
     generate!("SetCirclePosition")
+    generate!("CreateParticleGroupDef")
 }
 
 pub mod box2d {
