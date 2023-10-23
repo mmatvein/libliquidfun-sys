@@ -24,8 +24,7 @@ extern "C" {
         b2Vec2 linearVelocity,
         float angularVelocity,
         float strength,
-        const b2Shape* shapes,
-        int32 shapeCount,
+        const b2Shape& shape,
         float stride,
         float lifetime
         ) {
@@ -38,8 +37,7 @@ extern "C" {
 		def->linearVelocity = linearVelocity;
 		def->angularVelocity = angularVelocity;
 		def->strength = strength;
-		def->shapes = &shapes;
-		def->shapeCount = shapeCount;
+		def->shape = &shape,
 		def->stride = stride;
 		def->lifetime = lifetime;
 		return def;
