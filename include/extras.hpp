@@ -5,8 +5,32 @@
 
 extern "C" {
     class b2CircleShape;
+    class b2World;
     struct b2Vec2;
     struct b2ParticleGroupDef;
+
+    class b2RevoluteJoint;
+    class b2PrismaticJoint;
+    class b2DistanceJoint;
+    class b2PulleyJoint;
+    class b2MouseJoint;
+    class b2GearJoint;
+    class b2WheelJoint;
+    class b2WeldJoint;
+    class b2FrictionJoint;
+    class b2RopeJoint;
+    class b2MotorJoint;
+    struct b2RevoluteJointDef;
+    struct b2PrismaticJointDef;
+    struct b2DistanceJointDef;
+    struct b2PulleyJointDef;
+    struct b2MouseJointDef;
+    struct b2GearJointDef;
+    struct b2WheelJointDef;
+    struct b2WeldJointDef;
+    struct b2FrictionJointDef;
+    struct b2RopeJointDef;
+    struct b2MotorJointDef;
 
     void SetCircleRadius(b2CircleShape& self, float radius) {
         self.m_radius = radius;
@@ -41,6 +65,46 @@ extern "C" {
 		def->stride = stride;
 		def->lifetime = lifetime;
 		return def;
+    }
+
+    b2RevoluteJoint* CreateRevoluteJoint(b2World& world, const b2RevoluteJointDef* def) {
+        return static_cast<b2RevoluteJoint*>(world.CreateJoint(def));
+    }
+
+    b2PrismaticJoint* CreatePrismaticJoint(b2World& world, const b2PrismaticJointDef* def) {
+        return static_cast<b2PrismaticJoint*>(world.CreateJoint(def));
+    }
+
+    b2DistanceJoint* CreateDistanceJoint(b2World& world, const b2DistanceJointDef* def) {
+        return static_cast<b2DistanceJoint*>(world.CreateJoint(def));
+    }
+
+    b2PulleyJoint* CreatePulleyJoint(b2World& world, const b2PulleyJointDef* def) {
+        return static_cast<b2PulleyJoint*>(world.CreateJoint(def));
+    }
+
+    b2MouseJoint* CreateMouseJoint(b2World& world, const b2MouseJointDef* def) {
+        return static_cast<b2MouseJoint*>(world.CreateJoint(def));
+    }
+
+    b2GearJoint* CreateGearJoint(b2World& world, const b2GearJointDef* def) {
+        return static_cast<b2GearJoint*>(world.CreateJoint(def));
+    }
+
+    b2WheelJoint* CreateWheelJoint(b2World& world, const b2WheelJointDef* def) {
+        return static_cast<b2WheelJoint*>(world.CreateJoint(def));
+    }
+
+    b2WeldJoint* CreateWeldJoint(b2World& world, const b2WeldJointDef* def) {
+        return static_cast<b2WeldJoint*>(world.CreateJoint(def));
+    }
+
+    b2FrictionJoint* CreateFrictionJoint(b2World& world, const b2FrictionJointDef* def) {
+        return static_cast<b2FrictionJoint*>(world.CreateJoint(def));
+    }
+
+    b2MotorJoint* CreateMotorJoint(b2World& world, const b2MotorJointDef* def) {
+        return static_cast<b2MotorJoint*>(world.CreateJoint(def));
     }
 }
 

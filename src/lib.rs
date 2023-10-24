@@ -70,6 +70,17 @@ include_cpp! {
     generate!("SetCircleRadius")
     generate!("SetCirclePosition")
     generate!("CreateParticleGroupDef")
+
+    generate!("CreateRevoluteJoint")
+    generate!("CreatePrismaticJoint")
+    generate!("CreateDistanceJoint")
+    generate!("CreatePulleyJoint")
+    generate!("CreateMouseJoint")
+    generate!("CreateGearJoint")
+    generate!("CreateWheelJoint")
+    generate!("CreateWeldJoint")
+    generate!("CreateFrictionJoint")
+    generate!("CreateMotorJoint")
 }
 
 pub mod box2d {
