@@ -31,6 +31,7 @@ extern "C" {
     struct b2FrictionJointDef;
     struct b2RopeJointDef;
     struct b2MotorJointDef;
+    enum b2JointType;
 
     void SetCircleRadius(b2CircleShape& self, float radius) {
         self.m_radius = radius;
@@ -67,9 +68,37 @@ extern "C" {
 		return def;
     }
 
-    b2RevoluteJoint* CreateRevoluteJoint(b2World& world, const b2RevoluteJointDef* def) {
-        return static_cast<b2RevoluteJoint*>(world.CreateJoint(def));
+    b2RevoluteJoint* CreateRevoluteJoint(
+            b2World& world,
+            b2Body* bodyA,
+            b2Body* bodyB,
+            bool collideConnected,
+            b2Vec2 localAnchorA,
+            b2Vec2 localAnchorB,
+            float referenceAngle,
+            bool enableLimit,
+            float lowerAngle,
+            float upperAngle,
+            bool enableMotor,
+            float maxMotorTorque,
+            float motorSpeed) {
+        b2RevoluteJointDef def;
+        def.type = b2JointType::e_revoluteJoint;
+        def.bodyA = bodyA,
+        def.bodyB = bodyB,
+        def.collideConnected = collideConnected;
+        def.localAnchorA = localAnchorA;
+        def.localAnchorB = localAnchorB;
+        def.referenceAngle = referenceAngle;
+        def.enableLimit = enableLimit;
+        def.lowerAngle = lowerAngle;
+        def.upperAngle = upperAngle;
+        def.enableMotor = enableMotor;
+        def.maxMotorTorque = maxMotorTorque;
+        def.motorSpeed = motorSpeed;
+        return static_cast<b2RevoluteJoint*>(world.CreateJoint(&def));
     }
+
 
     b2PrismaticJoint* CreatePrismaticJoint(b2World& world, const b2PrismaticJointDef* def) {
         return static_cast<b2PrismaticJoint*>(world.CreateJoint(def));
