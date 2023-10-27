@@ -100,8 +100,37 @@ extern "C" {
     }
 
 
-    b2PrismaticJoint* CreatePrismaticJoint(b2World& world, const b2PrismaticJointDef* def) {
-        return static_cast<b2PrismaticJoint*>(world.CreateJoint(def));
+    b2PrismaticJoint* CreatePrismaticJoint(
+            b2World& world,
+            b2Body* bodyA,
+            b2Body* bodyB,
+            bool collideConnected,
+            b2Vec2 localAnchorA,
+            b2Vec2 localAnchorB,
+            b2Vec2 localAxisA,
+            float referenceAngle,
+            bool enableLimit,
+            float lowerTranslation,
+            float upperTranslation,
+            bool enableMotor,
+            float maxMotorForce,
+            float motorSpeed) {
+        b2PrismaticJointDef def;
+        def.type = b2JointType::e_prismaticJoint;
+        def.bodyA = bodyA,
+        def.bodyB = bodyB,
+        def.collideConnected = collideConnected;
+        def.localAnchorA = localAnchorA;
+        def.localAnchorB = localAnchorB;
+        def.localAxisA = localAxisA;
+        def.referenceAngle = referenceAngle;
+        def.enableLimit = enableLimit;
+        def.lowerTranslation = lowerTranslation;
+        def.upperTranslation = upperTranslation;
+        def.enableMotor = enableMotor;
+        def.maxMotorForce = maxMotorForce;
+        def.motorSpeed = motorSpeed;
+        return static_cast<b2PrismaticJoint*>(world.CreateJoint(&def));
     }
 
     b2DistanceJoint* CreateDistanceJoint(b2World& world, const b2DistanceJointDef* def) {
