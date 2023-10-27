@@ -2,8 +2,13 @@
 name = "libliquidfun-sys"
 version = "0.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+authors = ["Mikael Matveinen <mikael@lingongames.com>"]
+homepage = "https://github.com/mmatvein/libliquidfun-sys"
+repository = "https://github.com/mmatvein/libliquidfun-sys"
+description = "A thin Rust ffi wrapper on top of Box2D and LiquidFun. Built using autocxx."
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = ["liquidfun", "box2d", "physics"]
 
 [dependencies]
 autocxx = "*"
