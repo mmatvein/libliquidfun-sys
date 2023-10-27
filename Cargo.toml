@@ -11,10 +11,10 @@ readme = "README.md"
 keywords = ["liquidfun", "box2d", "physics"]
 
 [dependencies]
-autocxx = "*"
-cxx = "*"
+autocxx = "0.26.0"
+cxx = "1.0.109"
 
 [build-dependencies]
-autocxx-build = "*"
+autocxx-build = "0.26.0"
 cmake = "0.1.50"
-cc = "*"
+cc = "1.0.83"
