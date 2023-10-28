@@ -12,11 +12,15 @@ This crate is used by [bevy_liquidfun](https://github.com/mmatvein/bevy_liquidfu
 - The autocxx generated wrappers for all the joint definitions have some misalignment, possibly caused by the inheritance hierarchy. This is worked around by having factory methods for joint creation with all the parameters.
 
 ### Acknowledgements
+This small wrapper stands on the shoulders of giants. Big thanks go to the original libraries, which do the heavy lifting:
+
 [Box2D](https://github.com/erincatto/box2d) by Erin Catto
 
 [LiquidFun](https://github.com/google/liquidfun) by Google
 
 [autocxx](https://github.com/google/autocxx) by Google
+
+Additionally, the version of Box2D used is a fork of Box2D:
 
 [LiquidFun rebase onto newer Box2D](https://github.com/Birch-san/box2d/tree/liquidfun-rebase) by Birch-san
 
