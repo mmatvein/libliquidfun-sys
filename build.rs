@@ -9,7 +9,13 @@ fn main() {
     println!("cargo:rerun-if-changed=include/");
 
     let box2d_path = build_box2d();
-    generate_bindings(box2d_path);
+    let box2d_include_path = box2d_path.join(std::path::PathBuf::from("include"));
+    cc::Build::new()
+        .cpp(true)
+        .includes([&box2d_include_path, &std::path::PathBuf::from("include")])
+        .file("src/extras.cpp")
+        .compile("libliquidfun-sys-extras.a");
+    generate_bindings(box2d_include_path);
 }
 
 fn build_box2d() -> PathBuf {
@@ -27,13 +33,18 @@ fn build_box2d() -> PathBuf {
     );
     println!("cargo:include={}/include", box2d_path.display());
 
-
     return box2d_path;
 }
 
-fn generate_bindings(box2d_path: PathBuf) {
-    let box2d_include_path = box2d_path.join(std::path::PathBuf::from("include"));
+fn generate_bindings(box2d_include_path: PathBuf) {
     let include_path = std::path::PathBuf::from("include");
-    let mut autocxx_build = autocxx_build::Builder::new("src/lib.rs", [&box2d_include_path, &include_path]).build().unwrap();
-    autocxx_build.include(box2d_include_path).include(include_path).flag_if_supported("-std=c++14").compile("libliquidfun-sys.a");
+    let mut autocxx_build =
+        autocxx_build::Builder::new("src/lib.rs", [&box2d_include_path, &include_path])
+            .build()
+            .unwrap();
+    autocxx_build
+        .include(box2d_include_path)
+        .include(include_path)
+        .flag_if_supported("-std=c++14")
+        .compile("libliquidfun-sys.a");
 }
