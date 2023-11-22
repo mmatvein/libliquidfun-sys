@@ -5,6 +5,7 @@
 use std::fmt::{Debug, Formatter};
 
 use autocxx::prelude::*;
+use contact_listener::b2ContactListenerWrapper;
 
 include_cpp! {
     #include "box2d/box2d.h"
@@ -13,6 +14,7 @@ include_cpp! {
 
     generate!("b2Body")
     generate!("b2Contact")
+    generate!("b2ContactListener")
     generate!("b2ContactFilter")
     generate!("b2DestructionListener")
     generate!("b2Filter")
@@ -82,10 +84,14 @@ include_cpp! {
     generate!("CreateWeldJoint")
     generate!("CreateFrictionJoint")
     generate!("CreateMotorJoint")
+
+    subclass!("b2ContactListener", b2ContactListenerWrapper)
 }
 
+mod contact_listener;
 pub mod box2d {
     pub mod ffi {
+        pub use crate::contact_listener::*;
         pub use crate::ffi::*;
     }
 }
@@ -98,17 +104,21 @@ impl PartialEq for ffi::b2Vec2 {
 
 impl Debug for ffi::b2Vec2 {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("b2Vec2").field("x", &self.x).field("y", &self.y).finish()
+        f.debug_struct("b2Vec2")
+            .field("x", &self.x)
+            .field("y", &self.y)
+            .finish()
     }
 }
 
 #[cfg(test)]
 mod tests {
+    use crate::contact_listener::b2ContactListenerWrapper;
     use std::pin::Pin;
 
-    use crate::ffi::{b2BodyDef, b2CircleShape, b2Shape};
-    use crate::ffi::b2BodyType::b2_dynamicBody;
+    use crate::ffi::b2BodyType::{b2_dynamicBody, b2_staticBody};
     use crate::ffi::SetCircleRadius;
+    use crate::ffi::{b2BodyDef, b2CircleShape, b2Shape, b2Vec2};
 
     use super::*;
 
@@ -139,20 +149,26 @@ mod tests {
             body.as_mut().CreateFixture1(&*shape, 5.);
 
             for _ in 0..10 {
-                world.as_mut().Step(
-                    0.02,
-                    c_int::from(8),
-                    c_int::from(3),
-                    c_int::from(100));
+                world
+                    .as_mut()
+                    .Step(0.02, c_int::from(8), c_int::from(3), c_int::from(100));
             }
 
-            assert!(body.as_ref().GetPosition().y < 0., "Body needs to move downwards due to gravity");
+            assert!(
+                body.as_ref().GetPosition().y < 0.,
+                "Body needs to move downwards due to gravity"
+            );
         }
     }
 }
 
 impl Debug for ffi::b2Body {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("b2Body").field("position", &self.GetPosition()).field("angle", &self.GetAngle()).field("type", &(self.GetType() as u32)).field("mass", &self.GetMass()).finish()
+        f.debug_struct("b2Body")
+            .field("position", &self.GetPosition())
+            .field("angle", &self.GetAngle())
+            .field("type", &(self.GetType() as u32))
+            .field("mass", &self.GetMass())
+            .finish()
     }
 }
