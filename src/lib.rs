@@ -5,6 +5,7 @@
 use std::fmt::{Debug, Formatter};
 
 use autocxx::prelude::*;
+
 use contact_listener::b2ContactListenerWrapper;
 use ray_cast::b2RayCastCallbackWrapper;
 
@@ -118,12 +119,11 @@ impl Debug for ffi::b2Vec2 {
 
 #[cfg(test)]
 mod tests {
-    use crate::contact_listener::b2ContactListenerWrapper;
     use std::pin::Pin;
 
-    use crate::ffi::b2BodyType::{b2_dynamicBody, b2_staticBody};
+    use crate::ffi::b2BodyType::b2_dynamicBody;
     use crate::ffi::SetCircleRadius;
-    use crate::ffi::{b2BodyDef, b2CircleShape, b2Shape, b2Vec2};
+    use crate::ffi::{b2BodyDef, b2CircleShape, b2Shape};
 
     use super::*;
 

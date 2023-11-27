@@ -1,16 +1,18 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
+use std::cell::RefCell;
+use std::ffi::c_int;
+use std::rc::Rc;
+use std::sync::{Arc, Weak};
+
+use autocxx::subclass::{CppSubclass, CppSubclassCppPeerHolder};
+
 use crate::box2d::ffi;
 use crate::ffi::{
     b2Contact, b2ContactImpulse, b2Fixture, b2Manifold, b2ParticleBodyContact, b2ParticleContact,
     b2ParticleSystem, int32,
 };
-use autocxx::subclass::{CppSubclass, CppSubclassCppPeerHolder};
-use std::cell::RefCell;
-use std::ffi::c_int;
-use std::rc::Rc;
-use std::sync::{Arc, Weak};
 
 #[allow(unused_variables)]
 pub trait b2ContactListenerImpl {
@@ -158,17 +160,18 @@ impl CppSubclass<ffi::b2ContactListenerWrapperCpp> for b2ContactListenerWrapper 
 
 #[cfg(test)]
 mod tests {
+    use std::cell::RefCell;
+    use std::pin::Pin;
+    use std::sync::Arc;
+
+    use autocxx::prelude::*;
+
     use crate::contact_listener::{b2ContactListenerImpl, b2ContactListenerWrapper};
     use crate::ffi::b2BodyType::{b2_dynamicBody, b2_staticBody};
     use crate::ffi::{
         b2BodyDef, b2CircleShape, b2Contact, b2ContactListener, b2Shape, b2Vec2, b2World,
         SetCircleRadius,
     };
-    use autocxx::prelude::*;
-    use std::cell::RefCell;
-    use std::pin::Pin;
-    use std::rc::Rc;
-    use std::sync::Arc;
 
     #[test]
     fn contact_listener_triggered() {
@@ -203,13 +206,11 @@ mod tests {
                 body.as_mut().CreateFixture1(&*shape, 5.);
             }
 
-            let begin_contact_called = Rc::new(RefCell::new(false));
             let listener = ListenerImpl {
                 begin_contact_called: false,
             };
-            let listener_ref = &listener;
-            let baa = Arc::new(RefCell::new(listener));
-            let contact_listener = b2ContactListenerWrapper::new(baa.clone());
+            let listener_ref = Arc::new(RefCell::new(listener));
+            let contact_listener = b2ContactListenerWrapper::new(listener_ref.clone());
             {
                 let contact_listener: *mut b2ContactListener = contact_listener
                     .as_ref()
@@ -226,7 +227,7 @@ mod tests {
                     .Step(0.02, c_int::from(8), c_int::from(3), c_int::from(100));
             }
 
-            let listener_impl = baa.borrow();
+            let listener_impl = listener_ref.borrow();
             assert!(listener_impl.begin_contact_called)
         }
 
