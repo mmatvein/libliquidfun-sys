@@ -6,6 +6,7 @@ use std::fmt::{Debug, Formatter};
 
 use autocxx::prelude::*;
 use contact_listener::b2ContactListenerWrapper;
+use ray_cast::b2RayCastCallbackWrapper;
 
 include_cpp! {
     #include "box2d/box2d.h"
@@ -21,6 +22,7 @@ include_cpp! {
     generate!("b2Fixture")
     generate!("b2Manifold")
     generate!("b2QueryCallback")
+    generate!("b2RayCastCallback")
     generate!("b2World")
     generate!("b2WorldManifold")
 
@@ -86,13 +88,16 @@ include_cpp! {
     generate!("CreateMotorJoint")
 
     subclass!("b2ContactListener", b2ContactListenerWrapper)
+    subclass!("b2RayCastCallback", b2RayCastCallbackWrapper)
 }
 
 mod contact_listener;
+mod ray_cast;
 pub mod box2d {
     pub mod ffi {
         pub use crate::contact_listener::*;
         pub use crate::ffi::*;
+        pub use crate::ray_cast::*;
     }
 }
 
