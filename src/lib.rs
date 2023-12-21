@@ -25,7 +25,6 @@ include_cpp! {
     generate!("b2QueryCallback")
     generate!("b2RayCastCallback")
     generate!("b2World")
-    generate!("b2WorldManifold")
 
     generate!("b2Shape")
     generate!("b2ChainShape")
@@ -68,9 +67,10 @@ include_cpp! {
     generate_pod!("b2BodyDef")
     generate_pod!("b2FixtureDef")
     generate_pod!("b2MassData")
+    generate_pod!("b2Rot")
     generate_pod!("b2Transform")
     generate_pod!("b2Vec2")
-    generate_pod!("b2Rot")
+    generate_pod!("b2WorldManifold")
 
     // extras.hpp
     generate!("SetCircleRadius")
