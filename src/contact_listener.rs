@@ -27,7 +27,7 @@ pub trait b2ContactListenerImpl {
     fn end_particle_body_contact(
         &mut self,
         fixture: &mut b2Fixture,
-        particleSystem: &mut b2ParticleSystem,
+        particle_system: &mut b2ParticleSystem,
         particle_index: i32,
     ) {
     }
