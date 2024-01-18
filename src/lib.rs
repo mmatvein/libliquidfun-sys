@@ -34,6 +34,7 @@ include_cpp! {
 
     generate!("b2Joint")
     generate!("b2DistanceJoint")
+    generate!("b2MouseJoint")
     generate!("b2FrictionJoint")
     generate!("b2GearJoint")
     generate!("b2MotorJoint")
@@ -45,6 +46,7 @@ include_cpp! {
     generate!("b2JointUserData")
     generate!("b2JointDef")
     generate!("b2DistanceJointDef")
+    generate!("b2MouseJointDef")
     generate!("b2FrictionJointDef")
     generate!("b2GearJointDef")
     generate!("b2MotorJointDef")
