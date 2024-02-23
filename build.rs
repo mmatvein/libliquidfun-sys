@@ -25,6 +25,7 @@ fn build_box2d() -> PathBuf {
         .define("BOX2D_BUILD_DOCS", "OFF")
         .define("BOX2D_USER_SETTINGS", "OFF")
         .define("BUILD_SHARED_LIBS", "OFF")
+        .define("B2_USE_16_BIT_PARTICLE_INDICES", "ON")
         .build();
 
     println!(
