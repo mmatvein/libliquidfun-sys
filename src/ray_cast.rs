@@ -1,15 +1,19 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-use std::cell::RefCell;
-use std::ffi::c_int;
-use std::rc::Rc;
-use std::sync::{Arc, Weak};
+use std::{
+    cell::RefCell,
+    ffi::c_int,
+    rc::Rc,
+    sync::{Arc, Weak},
+};
 
 use autocxx::subclass::{CppSubclass, CppSubclassCppPeerHolder};
 
-use crate::box2d::ffi;
-use crate::ffi::{b2Fixture, b2ParticleSystem, b2Vec2, int32};
+use crate::{
+    box2d::ffi,
+    ffi::{b2Fixture, b2ParticleSystem, b2Vec2, int32},
+};
 
 #[allow(unused_variables)]
 pub trait b2RayCastCallbackImpl {
@@ -112,18 +116,25 @@ impl CppSubclass<ffi::b2RayCastCallbackWrapperCpp> for b2RayCastCallbackWrapper 
 
 #[cfg(test)]
 mod tests {
-    use std::cell::RefCell;
-    use std::pin::Pin;
-    use std::sync::Arc;
+    use std::{cell::RefCell, pin::Pin, sync::Arc};
 
     use autocxx::prelude::*;
 
-    use crate::ffi::b2BodyType::b2_staticBody;
-    use crate::ffi::{
-        b2BodyDef, b2CircleShape, b2Fixture, b2ParticleSystem, b2RayCastCallback, b2Shape, b2Vec2,
-        b2World, SetCircleRadius,
+    use crate::{
+        ffi::{
+            b2BodyDef,
+            b2BodyType::b2_staticBody,
+            b2CircleShape,
+            b2Fixture,
+            b2ParticleSystem,
+            b2RayCastCallback,
+            b2Shape,
+            b2Vec2,
+            b2World,
+            SetCircleRadius,
+        },
+        ray_cast::{b2RayCastCallbackImpl, b2RayCastCallbackWrapper},
     };
-    use crate::ray_cast::{b2RayCastCallbackImpl, b2RayCastCallbackWrapper};
 
     #[test]
     fn raycast_hits_correct_fixture() {

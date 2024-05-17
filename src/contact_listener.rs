@@ -1,17 +1,27 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-use std::cell::RefCell;
-use std::ffi::c_int;
-use std::rc::Rc;
-use std::sync::{Arc, Weak};
+use std::{
+    cell::RefCell,
+    ffi::c_int,
+    rc::Rc,
+    sync::{Arc, Weak},
+};
 
 use autocxx::subclass::{CppSubclass, CppSubclassCppPeerHolder};
 
-use crate::box2d::ffi;
-use crate::ffi::{
-    b2Contact, b2ContactImpulse, b2Fixture, b2Manifold, b2ParticleBodyContact, b2ParticleContact,
-    b2ParticleSystem, int32,
+use crate::{
+    box2d::ffi,
+    ffi::{
+        b2Contact,
+        b2ContactImpulse,
+        b2Fixture,
+        b2Manifold,
+        b2ParticleBodyContact,
+        b2ParticleContact,
+        b2ParticleSystem,
+        int32,
+    },
 };
 
 #[allow(unused_variables)]
@@ -160,17 +170,23 @@ impl CppSubclass<ffi::b2ContactListenerWrapperCpp> for b2ContactListenerWrapper 
 
 #[cfg(test)]
 mod tests {
-    use std::cell::RefCell;
-    use std::pin::Pin;
-    use std::sync::Arc;
+    use std::{cell::RefCell, pin::Pin, sync::Arc};
 
     use autocxx::prelude::*;
 
-    use crate::contact_listener::{b2ContactListenerImpl, b2ContactListenerWrapper};
-    use crate::ffi::b2BodyType::{b2_dynamicBody, b2_staticBody};
-    use crate::ffi::{
-        b2BodyDef, b2CircleShape, b2Contact, b2ContactListener, b2Shape, b2Vec2, b2World,
-        SetCircleRadius,
+    use crate::{
+        contact_listener::{b2ContactListenerImpl, b2ContactListenerWrapper},
+        ffi::{
+            b2BodyDef,
+            b2BodyType::{b2_dynamicBody, b2_staticBody},
+            b2CircleShape,
+            b2Contact,
+            b2ContactListener,
+            b2Shape,
+            b2Vec2,
+            b2World,
+            SetCircleRadius,
+        },
     };
 
     #[test]

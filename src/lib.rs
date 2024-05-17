@@ -5,7 +5,6 @@
 use std::fmt::{Debug, Formatter};
 
 use autocxx::prelude::*;
-
 use contact_listener::b2ContactListenerWrapper;
 use ray_cast::b2RayCastCallbackWrapper;
 
@@ -96,9 +95,7 @@ mod contact_listener;
 mod ray_cast;
 pub mod box2d {
     pub mod ffi {
-        pub use crate::contact_listener::*;
-        pub use crate::ffi::*;
-        pub use crate::ray_cast::*;
+        pub use crate::{contact_listener::*, ffi::*, ray_cast::*};
     }
 }
 
@@ -121,11 +118,14 @@ impl Debug for ffi::b2Vec2 {
 mod tests {
     use std::pin::Pin;
 
-    use crate::ffi::b2BodyType::b2_dynamicBody;
-    use crate::ffi::SetCircleRadius;
-    use crate::ffi::{b2BodyDef, b2CircleShape, b2Shape};
-
     use super::*;
+    use crate::ffi::{
+        b2BodyDef,
+        b2BodyType::b2_dynamicBody,
+        b2CircleShape,
+        b2Shape,
+        SetCircleRadius,
+    };
 
     #[test]
     fn create_world() {
