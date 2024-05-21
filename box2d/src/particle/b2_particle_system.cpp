@@ -2517,7 +2517,8 @@ private:
 	{
 		if (fixture->IsSensor())
 		{
-			return true;
+			// ENABLE PARTICLE->SENSOR CONTACTS
+			//return true;
 		}
 		const b2Shape* shape = fixture->GetShape();
 		int32 childCount = shape->GetChildCount();
@@ -2776,6 +2777,8 @@ void b2ParticleSystem::SolveCollision(const b2TimeStep& step)
 		inline bool ShouldCollide(b2Fixture * const fixture,
 								  int32 particleIndex)
 		{
+			// ENABLE PARTICLE->SENSOR CONTACTS
+			if (fixture->IsSensor()) return false;
 			if (m_contactFilter) {
 				const uint32* const flags = m_system->GetFlagsBuffer();
 				if (flags[particleIndex] & b2_fixtureContactFilterParticle) {
@@ -3232,6 +3235,12 @@ void b2ParticleSystem::SolvePressure(const b2TimeStep& step)
 	for (int32 k = 0; k < m_bodyContactBuffer.GetCount(); k++)
 	{
 		const b2ParticleBodyContact& contact = m_bodyContactBuffer[k];
+
+		// ENABLE PARTICLE->SENSOR CONTACTS
+		if (contact.fixture->IsSensor())
+		{
+			continue;
+		}
 		int32 a = contact.index;
 		b2Body* b = contact.body;
 		float w = contact.weight;
@@ -3265,6 +3274,12 @@ void b2ParticleSystem::SolveDamping(const b2TimeStep& step)
 	for (int32 k = 0; k < m_bodyContactBuffer.GetCount(); k++)
 	{
 		const b2ParticleBodyContact& contact = m_bodyContactBuffer[k];
+
+		// ENABLE PARTICLE->SENSOR CONTACTS
+		if (contact.fixture->IsSensor())
+		{
+			continue;
+		}
 		int32 a = contact.index;
 		b2Body* b = contact.body;
 		float w = contact.weight;
