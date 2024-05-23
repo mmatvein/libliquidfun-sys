@@ -2517,7 +2517,7 @@ private:
 	{
 		if (fixture->IsSensor())
 		{
-			// ENABLE PARTICLE->SENSOR CONTACTS
+			// CUSTOM: Enable particle->sensor contacts
 			//return true;
 		}
 		const b2Shape* shape = fixture->GetShape();
@@ -2777,7 +2777,7 @@ void b2ParticleSystem::SolveCollision(const b2TimeStep& step)
 		inline bool ShouldCollide(b2Fixture * const fixture,
 								  int32 particleIndex)
 		{
-			// ENABLE PARTICLE->SENSOR CONTACTS
+			// CUSTOM: Enable particle->sensor contacts
 			if (fixture->IsSensor()) return false;
 			if (m_contactFilter) {
 				const uint32* const flags = m_system->GetFlagsBuffer();
@@ -3236,7 +3236,7 @@ void b2ParticleSystem::SolvePressure(const b2TimeStep& step)
 	{
 		const b2ParticleBodyContact& contact = m_bodyContactBuffer[k];
 
-		// ENABLE PARTICLE->SENSOR CONTACTS
+		// CUSTOM: Enable particle->sensor contacts
 		if (contact.fixture->IsSensor())
 		{
 			continue;
@@ -3275,7 +3275,7 @@ void b2ParticleSystem::SolveDamping(const b2TimeStep& step)
 	{
 		const b2ParticleBodyContact& contact = m_bodyContactBuffer[k];
 
-		// ENABLE PARTICLE->SENSOR CONTACTS
+		// CUSTOM: Enable particle->sensor contacts
 		if (contact.fixture->IsSensor())
 		{
 			continue;

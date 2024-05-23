@@ -30,12 +30,13 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 
-#ifdef WIN32
-typedef __int64   int64;
-typedef unsigned __int64   uint64;
-#else // !WIN32
+// CUSTOM: These seem to be no longer needed on Windows, commented out to enable cross-compilation
+//#ifdef WIN32
+//typedef __int64   int64;
+//typedef unsigned __int64   uint64;
+//#else // !WIN32
 typedef long long int64;
 typedef unsigned long long uint64;
-#endif
+//#endif
 
 #endif
