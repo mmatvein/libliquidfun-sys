@@ -18,3 +18,7 @@ cxx = "1.0.110"
 autocxx-build = "0.26.0"
 cmake = "0.1.50"
 cc = "1.0.83"
+
+[dependencies.link-cplusplus]
+version = "1.0.9"
+features = ["nothing"]
