@@ -41,6 +41,7 @@ fn generate_bindings(box2d_include_path: PathBuf) {
     let include_path = std::path::PathBuf::from("include");
     let mut autocxx_build =
         autocxx_build::Builder::new("src/lib.rs", [&box2d_include_path, &include_path])
+            .extra_clang_args(&["-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_NONE"])
             .build()
             .unwrap();
     autocxx_build
