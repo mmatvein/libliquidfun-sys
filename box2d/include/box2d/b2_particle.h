@@ -95,6 +95,8 @@ public:
 	/// the b2Color object.
 	b2ParticleColor(const b2Color& color);
 
+    b2ParticleColor(const b2ParticleColor&) = default;
+
 	/// True when all four color elements equal 0. When true, a particle color
 	/// buffer isn't allocated by CreateParticle().
 	///
