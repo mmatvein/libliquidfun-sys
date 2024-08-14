@@ -1,6 +1,6 @@
 [package]
 name = "libliquidfun-sys"
-version = "0.3.0"
+version = "0.4.0"
 edition = "2021"
 authors = ["Mikael Matveinen <mikael@lingongames.com>"]
 homepage = "https://github.com/mmatvein/libliquidfun-sys"
