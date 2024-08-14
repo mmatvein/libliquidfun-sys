@@ -5,6 +5,7 @@
 use std::fmt::{Debug, Formatter};
 
 use autocxx::prelude::*;
+
 use contact_listener::b2ContactListenerWrapper;
 use ray_cast::b2RayCastCallbackWrapper;
 
